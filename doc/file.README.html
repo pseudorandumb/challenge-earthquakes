@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!file.README.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'><h1>Coding Challenge</h1>
+
+<p>This project uses Earthquake data from <a href="http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson">http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson</a>. The source returns data from the previous 30 days but data furthur back is needed. In order to store more days the data needs to be periodically pulled and saved. There is an example cron job below to enable such a thing. The &quot;most dangerous places&quot; can be found by using the bash script &quot;./most-dangerous-places num_places(int) num_days(int)&quot;</p>
+
+<h2>TODO / Changes</h2>
+
+<p>I would use different sources like the 1 day source if polling every day rather than using the 30 day everytime. Looking at the documentation it looks like I could actually use a different query to actively look at past data and save it locally to allow for queries going furthur back, but didn&#39;t use it since I was suppose to only use the 30 day query. Saving to the databse is slow because it creates/updates one record at a time. Ideally I&#39;d do a bulk update but figured since this wasn&#39;t time sensitive and would be running as a job it was an ok solution.</p>
+
+<h2>Requires</h2>
+
+<ul>
+<li>Ruby</li>
+<li>PostGres</li>
+<li>Homebrew (suggested)</li>
+</ul>
+
+<h2>Installation</h2>
+
+<p>A setup script is included to install dependencies and setup the database(assumes homebrew and ruby already installed).</p>
+
+<pre class="code ruby"><code class="ruby">./setup
+</code></pre>
+
+<p>...or if you prefer to manually install things:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_homebrew'>homebrew</span> <span class='id identifier rubyid_install'>install</span> <span class='id identifier rubyid_postgres'>postgres</span>
+<span class='id identifier rubyid_bundle'>bundle</span> <span class='id identifier rubyid_install'>install</span>
+<span class='id identifier rubyid_rake'>rake</span> <span class='label'>db:</span><span class='id identifier rubyid_create'>create</span>
+<span class='id identifier rubyid_rake'>rake</span> <span class='label'>db:</span><span class='id identifier rubyid_migrate'>migrate</span>
+</code></pre>
+
+<h2>Usage</h2>
+
+<p>Database is used to store and query data.
+To run the postgres in the foreground:</p>
+
+<pre class="code ruby"><code class="ruby">postgres -D /usr/local/var/postgres
+</code></pre>
+
+<p>background:</p>
+
+<pre class="code ruby"><code class="ruby">  <span class='id identifier rubyid_brew'>brew</span> <span class='id identifier rubyid_services'>services</span> <span class='id identifier rubyid_start'>start</span> <span class='id identifier rubyid_postgres'>postgres</span>
+</code></pre>
+
+<p>To retrieve 5 most dangerous cities in the past 10 days run:<br>
+./most-dangerous-places num_places num_days</p>
+
+<pre class="code ruby"><code class="ruby">./most-dangerous-places 5 10
+</code></pre>
+
+<p>Rakefile is given to update the local store of earthquakes.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_rake'>rake</span> <span class='label'>earthquakes:</span><span class='id identifier rubyid_update_local'>update_local</span>
+</code></pre>
+
+<p>Since the data source only returns the last 30 days of data
+we need to run the updater periodically. Below is an example
+of using cron to run the rake task once a day at midnight.</p>
+
+<pre class="code ruby"><code class="ruby">0 0 * * * cd /path/to/dir rake earthquakes:update_local
+</code></pre>
+</div></div>
+
+    <div id="footer">
+  Generated on Sun Feb 21 22:20:51 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.3).
+</div>
+
+  </body>
+</html>
