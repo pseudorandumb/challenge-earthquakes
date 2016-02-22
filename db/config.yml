@@ -1,0 +1,5 @@
+development:
+  adapter: postgresql
+  database: earthquake_development
+  host: localhost
+  pool: 50
