@@ -7,7 +7,7 @@ class CreateEarthquake < ActiveRecord::Migration
       t.float :longitude
       t.float :latitude
       t.float :depth
-      t.time :time
+      t.timestamp :time
 
       t.timestamps null: false
     end

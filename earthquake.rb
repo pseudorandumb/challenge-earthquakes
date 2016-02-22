@@ -1,6 +1,8 @@
 require './environment'
 
 class Earthquake < ActiveRecord::Base
+  scope :dangerous_places, lambda { |num_places, num_days| where("time > ?", num_days.days.ago).order(magnitude: :desc).limit(num_places) }
+
   def to_hash
     self.as_json
   end
