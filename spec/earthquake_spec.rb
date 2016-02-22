@@ -20,7 +20,7 @@ describe Earthquake do
   end
 
   it "should save to the DB" do
-    results = Earthquake::update_stored_earthquakes
+    Earthquake::update_stored_earthquakes
     expect(Earthquake.first["earthquake_id"]).to eq(@earthquake[:earthquake_id])
   end
 

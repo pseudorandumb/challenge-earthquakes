@@ -10,6 +10,7 @@ class Earthquake < ActiveRecord::Base
   def self.update_stored_earthquakes
     newData = transform_geo_data(retrieve_earthquake_data)
     newData.each do |earthquake_data|
+      next if earthquake_data[:magnitude].nil?
       earthquake = find_or_initialize_by(earthquake_id: earthquake_data[:earthquake_id])
       earthquake.update(earthquake_data)
     end
