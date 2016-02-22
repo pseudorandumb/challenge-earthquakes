@@ -14,7 +14,7 @@ Requires
 
 Installation
 ------------
-A setup script is included to install dependencies and setup the database(assumes homebrew and ruby already installed).
+A setup script is included to install dependencies and setup the database(assumes homebrew and ruby already installed). It is specific to OSX.
 ```
 ./setup
 ```
@@ -27,7 +27,7 @@ rake db:migrate
 ```
 Usage
 -----
-Database is used to store and query data.
+Database is used to store and query data. The DB source can be changed in db/config.yml.
 To run the postgres in the foreground:
 ```
 postgres -D /usr/local/var/postgres
